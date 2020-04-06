@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-boost";
-import Turkey from "../components/Covid19/Turkey";
 import WorldMap from "../components/Covid19/WorldMap";
 const client = new ApolloClient({
   uri: "https://covid19-graphql.now.sh/",

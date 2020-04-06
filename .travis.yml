@@ -7,6 +7,7 @@ cache:
 script:
   - echo "skipping tests"
 before_deploy:
+  - unset CI
   - npm install -g travis-ci-cloudfront-invalidation
   - npm run build
 deploy:

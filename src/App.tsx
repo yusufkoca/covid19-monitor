@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Covid19Page from "./pages/Covid19Page";
+import CountryDashboard from "./components/Covid19/CountryDashboard";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -22,7 +24,7 @@ export default function BasicExample() {
             <Link to="/page1">Page 1</Link>
           </li>
           <li>
-            <Link to="/page2">Page 2</Link>
+            <Link to="/covid19">Covid 19</Link>
           </li>
         </ul>
 
@@ -37,43 +39,24 @@ export default function BasicExample() {
         */}
         <Switch>
           <Route exact path="/">
-            <Home />
+            <div>
+              <h2>Home</h2>
+            </div>
           </Route>
           <Route path="/page1">
-            <About />
+            <div>
+              <h2>Page 1</h2>
+            </div>
           </Route>
-          <Route path="/page2">
-            <Dashboard />
+
+          <Route path="/covid19/:countryName">
+            <CountryDashboard></CountryDashboard>
+          </Route>
+          <Route path="/covid19">
+            <Covid19Page></Covid19Page>
           </Route>
         </Switch>
       </div>
     </Router>
-  );
-}
-
-// You can think of these components as "pages"
-// in your app.
-
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
-
-function About() {
-  return (
-    <div>
-      <h2>Page 1</h2>
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Page 2</h2>
-    </div>
   );
 }

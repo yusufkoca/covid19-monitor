@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import ReactTooltip from "react-tooltip";
 import MapChart from "./MapChart";
+import formatNumber from "../../utils/formatNumber";
 
 const WORLD_QUERY = gql`
   {
@@ -65,12 +66,17 @@ export default function WorldMap() {
       ></MapChart>
       <ReactTooltip>
         <h1>{geoData.NAME}</h1>
-        <h2>Population: {geoData.POP_EST}</h2>
-        <ul>
-          <li>Confirmed: {covidData.confirmed}</li>
-          <li>Deaths: {covidData.deaths}</li>
-          <li>Recovered: {covidData.recovered}</li>
-        </ul>
+        <h2>Population: {formatNumber(geoData.POP_EST)}</h2>
+        <h3>Covid19 Data:</h3>
+        {covidData ? (
+          <ul>
+            <li>Confirmed: {formatNumber(covidData.confirmed) || "unknown"}</li>
+            <li>Deaths: {formatNumber(covidData.deaths) || "unknown"}</li>
+            <li>Recovered: {formatNumber(covidData.recovered) || "unknown"}</li>
+          </ul>
+        ) : (
+          <p>No Covid19 data of this country</p>
+        )}
       </ReactTooltip>
     </React.Fragment>
   );

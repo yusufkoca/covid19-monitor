@@ -15,10 +15,9 @@ const MapChart = ({
   countries,
   handleClickEvent,
 }) => {
-  console.log(countries);
   return (
     <>
-      <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
+      <ComposableMap data-tip="" projectionConfig={{ scale: 175 }}>
         <ZoomableGroup>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -27,12 +26,12 @@ const MapChart = ({
                   key={geo.rsmKey}
                   geography={geo}
                   onMouseEnter={() => {
-                    console.log(geo.properties.NAME);
-                    onHover(geo.properties, countries[geo.properties.NAME]);
+                    console.log(geo.properties);
+                    onHover(geo.properties, countries[geo.properties.ISO_A2]);
                   }}
                   onMouseLeave={mouseLeaveEvent}
                   onClick={(event) => {
-                    handleClickEvent(geo.properties.NAME);
+                    handleClickEvent(geo.properties.ISO_A2);
                   }}
                   style={{
                     default: {

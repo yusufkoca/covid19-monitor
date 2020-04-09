@@ -4,19 +4,23 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import ReactTooltip from "react-tooltip";
-import MapChart from "./MapChart";
+import MapChart from "../../components/Covid19/MapChart";
 import formatNumber from "../../utils/formatNumber";
 
-const WORLD_QUERY = gql`
+const WORLD_LATEST_QUERY = gql`
   {
-    countries {
-      name
-      mostRecent {
-        confirmed
-        deaths
-        recovered
-        growthRate
-        date
+    countries(count: 200, filter: { hasCases: true }) {
+      count
+      totalCount
+      results {
+        code
+        name
+        latest {
+          confirmed
+          deceased
+          recovered
+          lastUpdated
+        }
       }
     }
   }
@@ -26,7 +30,7 @@ export default function WorldMap() {
   let history = useHistory();
   const [covidData, setCovidData] = useState({
     confirmed: 0,
-    deaths: 0,
+    deceased: 0,
     recovered: 0,
   });
 
@@ -39,21 +43,22 @@ export default function WorldMap() {
   const onMouseLeave = () => {
     setCovidData({
       confirmed: 0,
-      deaths: 0,
+      deceased: 0,
       recovered: 0,
     });
   };
 
   const handleClickEvent = (countryName) => {
-    history.push("/covid19/" + countryName);
+    history.push("/covid19/country/" + countryName);
   };
 
-  const { loading, error, data } = useQuery(WORLD_QUERY);
+  const { loading, error, data } = useQuery(WORLD_LATEST_QUERY);
 
   if (loading) return <LinearProgress />;
   if (error) return <p>Error :(</p>;
-  const countries = data.countries.reduce(function (map, country) {
-    map[country.name] = country.mostRecent;
+
+  const countries = data.countries.results.reduce(function (map, country) {
+    map[country.code] = country.latest;
     return map;
   }, {});
   return (
@@ -71,7 +76,7 @@ export default function WorldMap() {
         {covidData ? (
           <ul>
             <li>Confirmed: {formatNumber(covidData.confirmed) || "unknown"}</li>
-            <li>Deaths: {formatNumber(covidData.deaths) || "unknown"}</li>
+            <li>Deaths: {formatNumber(covidData.deceased) || "unknown"}</li>
             <li>Recovered: {formatNumber(covidData.recovered) || "unknown"}</li>
           </ul>
         ) : (

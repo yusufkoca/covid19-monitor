@@ -6,17 +6,20 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 
 export default function MostRecent({ countryName }) {
   const COUNTRY_DATA = gql`
-  {
-    country(name: "${countryName}") {
-      results {
-        confirmed
-        deaths
-        recovered
-        growthRate
-        date
+    {
+      country(code:"${countryName}") {
+        name
+      	timeline{
+          	date
+            confirmed
+          	deltaConfirmed
+            deceased
+          	deltaDeceased
+            recovered
+          	deltaRecovered
+        }
       }
     }
-  }
 `;
   const { loading, error, data } = useQuery(COUNTRY_DATA);
 
@@ -26,31 +29,30 @@ export default function MostRecent({ countryName }) {
   const chartData: {
     labels: string[];
     confirmed: number[];
-    deaths: number[];
+    deceased: number[];
     recovered: number[];
   } = {
     labels: [],
     confirmed: [],
-    deaths: [],
+    deceased: [],
     recovered: [],
   };
 
-  data.country.results.forEach(
-    (result: {
+  data.country.timeline.forEach(
+    (dailyData: {
       date: string;
       confirmed: number;
-      deaths: number;
+      deceased: number;
       recovered: number;
     }) => {
-      if (result.confirmed > 0) {
-        chartData.labels.push(result.date);
-        chartData.confirmed.push(result.confirmed);
-        chartData.deaths.push(result.deaths);
-        chartData.recovered.push(result.recovered);
+      if (dailyData.confirmed > 0) {
+        chartData.labels.push(dailyData.date);
+        chartData.confirmed.push(dailyData.confirmed);
+        chartData.deceased.push(dailyData.deceased);
+        chartData.recovered.push(dailyData.recovered);
       }
     }
   );
-
   const lineData = {
     labels: chartData.labels, //Dates
     datasets: [
@@ -94,7 +96,7 @@ export default function MostRecent({ countryName }) {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: chartData.deaths,
+        data: chartData.deceased,
       },
       {
         label: "Recovered",

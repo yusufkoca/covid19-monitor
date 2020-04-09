@@ -7,23 +7,23 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 export default function MostRecent({ countryName }) {
   const COUNTRY_DATA = gql`
     {
-      country(name: "${countryName}") {
-        mostRecent {
-          confirmed
-          deaths
-          recovered
-          growthRate
-          date
-        }
+      country(code:"${countryName}") {
+        name
+  			latest {
+            confirmed
+            deceased
+            recovered
+            lastUpdated
+          }
       }
     }
-  `;
+`;
   const { loading, error, data } = useQuery(COUNTRY_DATA);
 
   if (loading) return <LinearProgress />;
   if (error) return <p>Error :(</p>;
 
-  const lastDayData = data.country.mostRecent;
+  const lastDayData = data.country.latest;
 
   const lastDayDonutData = {
     labels: ["Confirmed", "Deaths", "Recovered"],
@@ -31,7 +31,7 @@ export default function MostRecent({ countryName }) {
       {
         data: [
           lastDayData.confirmed,
-          lastDayData.deaths,
+          lastDayData.deceased,
           lastDayData.recovered,
         ],
         backgroundColor: ["#FFCE56", "#FF6384", "#36A2EB"],

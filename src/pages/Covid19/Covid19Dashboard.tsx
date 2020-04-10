@@ -8,7 +8,7 @@ import AllCountriesMarquee from "../../components/Covid19/AllCountriesMarquee";
 import MultipleCountryComparisonGraph from "../../components/Covid19/MultipleCountryComparisonGraph";
 
 const WORLD_LATEST_QUERY = gql`
-  {
+  query WorldLatest {
     countries(count: 200, filter: { hasCases: true }) {
       count
       totalCount
@@ -17,7 +17,7 @@ const WORLD_LATEST_QUERY = gql`
         name
         latest {
           confirmed
-          deceased
+          deaths: deceased
           recovered
           lastUpdated
         }

@@ -3,7 +3,6 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Line } from "react-chartjs-2";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import getRandomColor from "../../utils/getRandomColor";
 import graphColors from "../../utils/graphColors";
 
 export default function MultipleCountryComparisonGraph({

@@ -3,25 +3,26 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Line } from "react-chartjs-2";
 import LinearProgress from "@material-ui/core/LinearProgress";
-
-export default function MostRecent({ countryName }) {
-  const COUNTRY_DATA = gql`
-    {
-      country(code:"${countryName}") {
-        name
-      	timeline{
-          	date
-            confirmed
-          	deltaConfirmed
-            deceased
-          	deltaDeceased
-            recovered
-          	deltaRecovered
-        }
+const COUNTRY_DATA = gql`
+  query CountryTimeline($countryCode: String!) {
+    country(code: $countryCode) {
+      name
+      timeline {
+        date
+        confirmed
+        deltaConfirmed
+        deaths: deceased
+        deltaDeaths: deltaDeceased
+        recovered
+        deltaRecovered
       }
     }
+  }
 `;
-  const { loading, error, data } = useQuery(COUNTRY_DATA);
+export default function MostRecent({ countryCode }) {
+  const { loading, error, data } = useQuery(COUNTRY_DATA, {
+    variables: { countryCode },
+  });
 
   if (loading) return <LinearProgress color="secondary" />;
   if (error) return <p>Error :(</p>;
@@ -29,12 +30,12 @@ export default function MostRecent({ countryName }) {
   const chartData: {
     labels: string[];
     confirmed: number[];
-    deceased: number[];
+    deaths: number[];
     recovered: number[];
   } = {
     labels: [],
     confirmed: [],
-    deceased: [],
+    deaths: [],
     recovered: [],
   };
 
@@ -42,13 +43,13 @@ export default function MostRecent({ countryName }) {
     (dailyData: {
       date: string;
       confirmed: number;
-      deceased: number;
+      deaths: number;
       recovered: number;
     }) => {
       if (dailyData.confirmed > 0) {
         chartData.labels.push(dailyData.date);
         chartData.confirmed.push(dailyData.confirmed);
-        chartData.deceased.push(dailyData.deceased);
+        chartData.deaths.push(dailyData.deaths);
         chartData.recovered.push(dailyData.recovered);
       }
     }
@@ -96,7 +97,7 @@ export default function MostRecent({ countryName }) {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: chartData.deceased,
+        data: chartData.deaths,
       },
       {
         label: "Recovered",

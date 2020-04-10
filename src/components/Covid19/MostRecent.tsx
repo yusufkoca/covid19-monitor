@@ -3,22 +3,23 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Doughnut } from "react-chartjs-2";
 import LinearProgress from "@material-ui/core/LinearProgress";
-
-export default function MostRecent({ countryName }) {
-  const COUNTRY_DATA = gql`
-    {
-      country(code:"${countryName}") {
-        name
-  			latest {
-            confirmed
-            deceased
-            recovered
-            lastUpdated
-          }
+const COUNTRY_DATA = gql`
+  query CountryLatest($countryCode: String!) {
+    country(code: $countryCode) {
+      name
+      latest {
+        confirmed
+        deaths: deceased
+        recovered
+        lastUpdated
       }
     }
+  }
 `;
-  const { loading, error, data } = useQuery(COUNTRY_DATA);
+export default function MostRecent({ countryCode }) {
+  const { loading, error, data } = useQuery(COUNTRY_DATA, {
+    variables: { countryCode },
+  });
 
   if (loading) return <LinearProgress />;
   if (error) return <p>Error :(</p>;
@@ -31,7 +32,7 @@ export default function MostRecent({ countryName }) {
       {
         data: [
           lastDayData.confirmed,
-          lastDayData.deceased,
+          lastDayData.deaths,
           lastDayData.recovered,
         ],
         backgroundColor: ["#FFCE56", "#FF6384", "#36A2EB"],

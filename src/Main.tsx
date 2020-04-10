@@ -5,9 +5,12 @@ import CountryDashboard from "./pages/Covid19/CountryDashboard";
 import WorldMap from "./pages/Covid19/WorldMap";
 import Covid19Dashboard from "./pages/Covid19/Covid19Dashboard";
 import { ApolloProvider } from "@apollo/react-hooks";
-import ApolloClient from "apollo-boost";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
+import { ApolloClient } from "apollo-client";
 const client = new ApolloClient({
-  uri: "https://covid19-graphql.herokuapp.com/",
+  link: new HttpLink({ uri: "https://covid19-graphql.herokuapp.com/" }),
+  cache: new InMemoryCache(),
 });
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -34,7 +37,7 @@ export default function App() {
             <h2>Home</h2>
           </div>
         </Route>
-        <Route path="/covid19/country/:countryName">
+        <Route path="/covid19/country/:countryCode">
           <ApolloProvider client={client}>
             <CountryDashboard></CountryDashboard>
           </ApolloProvider>

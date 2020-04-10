@@ -8,7 +8,7 @@ import MapChart from "../../components/Covid19/MapChart";
 import formatNumber from "../../utils/formatNumber";
 
 const WORLD_LATEST_QUERY = gql`
-  {
+  query WorldLatest {
     countries(count: 200, filter: { hasCases: true }) {
       count
       totalCount
@@ -17,7 +17,7 @@ const WORLD_LATEST_QUERY = gql`
         name
         latest {
           confirmed
-          deceased
+          death: deceased
           recovered
           lastUpdated
         }

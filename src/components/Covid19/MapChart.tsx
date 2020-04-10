@@ -5,7 +5,6 @@ import {
   Geographies,
   Geography,
 } from "react-simple-maps";
-
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -14,13 +13,21 @@ const MapChart = ({
   mouseLeaveEvent,
   countries,
   handleClickEvent,
+}: {
+  onHover: (
+    countryGeoData: Record<string, any>,
+    countryCovidData: Record<string, any>
+  ) => void;
+  mouseLeaveEvent: () => void;
+  countries: Record<string, any>;
+  handleClickEvent: (countryCode: string) => void;
 }) => {
   return (
     <>
       <ComposableMap data-tip="" projectionConfig={{ scale: 175 }}>
         <ZoomableGroup>
           <Geographies geography={geoUrl}>
-            {({ geographies }) =>
+            {({ geographies }: { geographies: Record<string, any>[] }) =>
               geographies.map((geo) => (
                 <Geography
                   key={geo.rsmKey}
@@ -30,7 +37,7 @@ const MapChart = ({
                     onHover(geo.properties, countries[geo.properties.ISO_A2]);
                   }}
                   onMouseLeave={mouseLeaveEvent}
-                  onClick={(event) => {
+                  onClick={() => {
                     handleClickEvent(geo.properties.ISO_A2);
                   }}
                   style={{

@@ -28,15 +28,21 @@ const WORLD_LATEST_QUERY = gql`
 
 export default function WorldMap() {
   let history = useHistory();
-  const [covidData, setCovidData] = useState({
+  const [covidData, setCovidData] = useState<Record<string, any>>({
     confirmed: 0,
     deceased: 0,
     recovered: 0,
   });
 
-  const [geoData, setGeoData] = useState({ NAME: "", POP_EST: 0 });
+  const [geoData, setGeoData] = useState<Record<string, any>>({
+    NAME: "",
+    POP_EST: 0,
+  });
 
-  const onHover = (geoData, covidData) => {
+  const onHover = (
+    geoData: Record<string, any>,
+    covidData: Record<string, any>
+  ) => {
     setCovidData(covidData);
     setGeoData(geoData);
   };
@@ -48,7 +54,7 @@ export default function WorldMap() {
     });
   };
 
-  const handleClickEvent = (countryName) => {
+  const handleClickEvent = (countryName: string) => {
     history.push("/covid19/country/" + countryName);
   };
 
@@ -57,10 +63,14 @@ export default function WorldMap() {
   if (loading) return <LinearProgress />;
   if (error) return <p>Error :(</p>;
 
-  const countries = data.countries.results.reduce(function (map, country) {
+  const countries = data.countries.results.reduce(function (
+    map: Record<string, any>,
+    country: Record<string, any>
+  ) {
     map[country.code] = country.latest;
     return map;
-  }, {});
+  },
+  {});
   return (
     <React.Fragment>
       <MapChart

@@ -39,8 +39,7 @@ export default function Covid19Dashboard() {
   );
   const top10Countries = countriesSorted.slice(0, 10);
   const top10CountryCodes = top10Countries.map((country) => country.code);
-  //setSelectedCountries(top10CountryCodes);
-  const handleChangeSelectedCountries = (selectedCountries) => {
+  const handleChangeSelectedCountries = (selectedCountries: string[]) => {
     setSelectedCountries(selectedCountries);
   };
   return (

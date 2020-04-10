@@ -133,7 +133,9 @@ export default function MiniDrawer() {
             {/*
               TODO advanced breadcrumb links
            */}
-            {breadcrumbs.map(({ breadcrumb }) => breadcrumb)}
+            {breadcrumbs.map(
+              ({ breadcrumb }: { breadcrumb: JSX.Element }) => breadcrumb
+            )}
           </Breadcrumbs>
         </Toolbar>
       </AppBar>

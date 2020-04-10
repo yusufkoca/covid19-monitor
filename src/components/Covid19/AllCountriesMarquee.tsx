@@ -7,6 +7,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+// @ts-ignore
 import ReactCountryFlag from "react-country-flag";
 
 const WORLD_LATEST_QUERY = gql`
@@ -43,7 +44,7 @@ export default function AllCountriesMarquee() {
     >
       <List dense={true}>
         <InfiniteScroll duration={200} direction={"up"}>
-          {data.countries.results.map((country) => {
+          {data.countries.results.map((country: Record<string, any>) => {
             return (
               <ListItem key={country.name}>
                 <ListItemAvatar>

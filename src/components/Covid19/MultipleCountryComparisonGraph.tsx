@@ -46,33 +46,39 @@ export default function MultipleCountryComparisonGraph({
   if (data.countries.results.length === 0) {
     return <p>No result</p>;
   }
-  const datasets = data.countries.results.map((country, index) => {
-    const color = graphColors[index];
-    return {
-      label: country.name,
-      fill: false,
-      lineTension: 0.1,
-      backgroundColor: color,
-      borderColor: color,
-      borderCapStyle: "butt",
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: "miter",
-      pointBorderColor: color,
-      pointBackgroundColor: "#fff",
-      pointBorderWidth: 1,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: color,
-      pointHoverBorderColor: "rgba(220,220,220,1)",
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: country.timeline.map((dailyData) => dailyData.confirmed),
-    };
-  });
+  const datasets = data.countries.results.map(
+    (country: Record<string, any>, index: number) => {
+      const color = graphColors[index];
+      return {
+        label: country.name,
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: color,
+        borderColor: color,
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: color,
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: color,
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: country.timeline.map(
+          (dailyData: Record<string, any>) => dailyData.confirmed
+        ),
+      };
+    }
+  );
 
   const lineData = {
-    labels: data.countries.results[0].timeline.map((day) => day.date), //Dates
+    labels: data.countries.results[0].timeline.map(
+      (dailyData: Record<string, any>) => dailyData.date
+    ), //Dates
     datasets: datasets,
   };
   return (

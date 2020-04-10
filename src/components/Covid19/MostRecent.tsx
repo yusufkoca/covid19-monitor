@@ -16,7 +16,7 @@ const COUNTRY_DATA = gql`
     }
   }
 `;
-export default function MostRecent({ countryCode }) {
+export default function MostRecent({ countryCode }: { countryCode: string }) {
   const { loading, error, data } = useQuery(COUNTRY_DATA, {
     variables: { countryCode },
   });

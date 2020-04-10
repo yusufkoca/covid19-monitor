@@ -11,9 +11,15 @@ export default function Top10List({
   handleChangeSelectedCountries,
   countries,
   top10Countries,
+}: {
+  handleChangeSelectedCountries: (selectedCountryCodes: string[]) => void;
+  countries: Record<string, any>[];
+  top10Countries: Record<string, any>[];
 }) {
-  const [selectedCountries, setSelectedCountries] = useState({});
-  const handleToggleCountry = (country) => {
+  const [selectedCountries, setSelectedCountries] = useState<
+    Record<string, any>
+  >({});
+  const handleToggleCountry = (country: Record<string, any>) => {
     const newSelectedCountries = { ...selectedCountries };
     if (selectedCountries[country.code]) {
       delete newSelectedCountries[country.code];

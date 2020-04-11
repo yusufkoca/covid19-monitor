@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -47,16 +48,18 @@ export default function AllCountriesMarquee() {
           {data.countries.results.map((country: Record<string, any>) => {
             return (
               <ListItem key={country.name}>
-                <ListItemAvatar>
-                  <ReactCountryFlag
-                    countryCode={country.code}
-                    svg
-                    style={{
-                      fontSize: "2em",
-                      lineHeight: "2em",
-                    }}
-                  />
-                </ListItemAvatar>
+                <Link to={"/covid19/country/" + country.code}>
+                  <ListItemAvatar>
+                    <ReactCountryFlag
+                      countryCode={country.code}
+                      svg
+                      style={{
+                        fontSize: "2em",
+                        lineHeight: "2em",
+                      }}
+                    />
+                  </ListItemAvatar>
+                </Link>
                 <ListItemText
                   primary={country.name}
                   secondary={`Cases: ${country.latest.confirmed} Deaths: ${country.latest.deceased}`}

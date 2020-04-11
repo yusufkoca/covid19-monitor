@@ -22,6 +22,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import HomeIcon from "@material-ui/icons/Home";
 import Covid19DataIcon from "@material-ui/icons/BarChart";
 import Covid19OnMap from "@material-ui/icons/Public";
+import { Typography } from "@material-ui/core";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -92,6 +93,9 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
+  breadCrumbs: {
+    flexGrow: 1,
+  },
 }));
 
 export default function MiniDrawer() {
@@ -129,7 +133,11 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Breadcrumbs aria-label="breadcrumb" style={{ color: "#dddddd" }}>
+          <Breadcrumbs
+            aria-label="breadcrumb"
+            style={{ color: "#dddddd" }}
+            className={classes.breadCrumbs}
+          >
             {/*
               TODO advanced breadcrumb links
            */}

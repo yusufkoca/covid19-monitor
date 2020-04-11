@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Drawer from "./components/Drawer";
 import Main from "./Main";
+import { ClientInfoProvider } from "./ClientInfoContext";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -12,13 +13,15 @@ import Main from "./Main";
 // making sure things like the back button and bookmarks
 // work properly.
 
-export default function BasicExample() {
+export default function App() {
   return (
-    <Router>
-      <div style={{ display: "flex" }}>
-        <Drawer></Drawer>
-        <Main></Main>
-      </div>
-    </Router>
+    <ClientInfoProvider>
+      <Router>
+        <div style={{ display: "flex" }}>
+          <Drawer></Drawer>
+          <Main></Main>
+        </div>
+      </Router>
+    </ClientInfoProvider>
   );
 }

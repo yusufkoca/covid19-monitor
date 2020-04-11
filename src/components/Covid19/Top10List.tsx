@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -11,14 +12,16 @@ export default function Top10List({
   handleChangeSelectedCountries,
   countries,
   top10Countries,
+  defaultSelectedCountries,
 }: {
   handleChangeSelectedCountries: (selectedCountryCodes: string[]) => void;
   countries: Record<string, any>[];
   top10Countries: Record<string, any>[];
+  defaultSelectedCountries: Record<string, any>;
 }) {
   const [selectedCountries, setSelectedCountries] = useState<
     Record<string, any>
-  >({});
+  >(defaultSelectedCountries);
   const handleToggleCountry = (country: Record<string, any>) => {
     const newSelectedCountries = { ...selectedCountries };
     if (selectedCountries[country.code]) {
@@ -30,7 +33,6 @@ export default function Top10List({
         newSelectedCountries[country.code] = country;
       }
     }
-    console.log(newSelectedCountries);
     setSelectedCountries(newSelectedCountries);
     handleChangeSelectedCountries(Object.keys(newSelectedCountries));
   };
@@ -40,19 +42,21 @@ export default function Top10List({
       {top10Countries.map((country) => {
         return (
           <ListItem key={country.name}>
-            <ListItemAvatar>
-              <ReactCountryFlag
-                countryCode={country.code}
-                svg
-                style={{
-                  fontSize: "2em",
-                  lineHeight: "2em",
-                }}
-              />
-            </ListItemAvatar>
+            <Link to={"/covid19/country/" + country.code}>
+              <ListItemAvatar>
+                <ReactCountryFlag
+                  countryCode={country.code}
+                  svg
+                  style={{
+                    fontSize: "2em",
+                    lineHeight: "2em",
+                  }}
+                />
+              </ListItemAvatar>
+            </Link>
             <ListItemText
               primary={country.name}
-              secondary={`Cases: ${country.latest.confirmed} Deaths: ${country.latest.deceased}`}
+              secondary={`Cases: ${country.latest.confirmed} Deaths: ${country.latest.deaths}`}
             />
             {
               <ListItemSecondaryAction>

@@ -6,7 +6,6 @@ const ClientInfoProvider = (props: Record<string, any>) => {
   const [clientInfo, setClientInfo] = useState<Record<string, any>>({});
   useEffect(() => {
     getClientGeo().then(function (response) {
-      console.log(response.data);
       setClientInfo(response.data);
     });
   }, []);

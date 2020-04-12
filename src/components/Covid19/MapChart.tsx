@@ -33,7 +33,6 @@ const MapChart = ({
                   key={geo.rsmKey}
                   geography={geo}
                   onMouseEnter={() => {
-                    console.log(geo.properties);
                     onHover(geo.properties, countries[geo.properties.ISO_A2]);
                   }}
                   onMouseLeave={mouseLeaveEvent}

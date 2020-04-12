@@ -9,7 +9,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Typography from "@material-ui/core/Typography";
 import Top10List from "../../components/Covid19/Top10List";
 import AllCountriesMarquee from "../../components/Covid19/AllCountriesMarquee";
 import MultipleCountryComparisonGraph from "../../components/Covid19/MultipleCountryComparisonGraph";

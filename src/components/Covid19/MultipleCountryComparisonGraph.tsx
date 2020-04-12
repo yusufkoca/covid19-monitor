@@ -3,10 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import LinearIcon from "@material-ui/icons/LinearScale";
-import LogarithmicIcon from "@material-ui/icons/ShowChart";
 import Tab from "@material-ui/core/Tab";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
@@ -71,7 +67,6 @@ export default function MultipleCountryComparisonGraph({
   });
   if (loading) return <LinearProgress color="secondary" />;
   if (error) {
-    console.log(error);
     return <p>Error :(</p>;
   }
   if (data.countries.results.length === 0) {

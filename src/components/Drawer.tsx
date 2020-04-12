@@ -22,7 +22,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import HomeIcon from "@material-ui/icons/Home";
 import Covid19DataIcon from "@material-ui/icons/BarChart";
 import Covid19OnMap from "@material-ui/icons/Public";
-import { Typography } from "@material-ui/core";
 
 const StyledLink = styled(Link)`
   text-decoration: none;

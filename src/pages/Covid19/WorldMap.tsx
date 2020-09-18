@@ -17,8 +17,7 @@ const WORLD_LATEST_QUERY = gql`
         name
         latest {
           confirmed
-          death: deceased
-          recovered
+          deaths: deceased
           lastUpdated
         }
       }
@@ -30,8 +29,7 @@ export default function WorldMap() {
   let history = useHistory();
   const [covidData, setCovidData] = useState<Record<string, any>>({
     confirmed: 0,
-    deceased: 0,
-    recovered: 0,
+    deaths: 0,
   });
 
   const [geoData, setGeoData] = useState<Record<string, any>>({
@@ -49,8 +47,7 @@ export default function WorldMap() {
   const onMouseLeave = () => {
     setCovidData({
       confirmed: 0,
-      deceased: 0,
-      recovered: 0,
+      deaths: 0,
     });
   };
 
@@ -59,7 +56,6 @@ export default function WorldMap() {
   };
 
   const { loading, error, data } = useQuery(WORLD_LATEST_QUERY);
-
   if (loading) return <LinearProgress />;
   if (error) return <p>Error :(</p>;
 
@@ -86,8 +82,7 @@ export default function WorldMap() {
         {covidData ? (
           <ul>
             <li>Confirmed: {formatNumber(covidData.confirmed) || "unknown"}</li>
-            <li>Deaths: {formatNumber(covidData.deceased) || "unknown"}</li>
-            <li>Recovered: {formatNumber(covidData.recovered) || "unknown"}</li>
+            <li>Deaths: {formatNumber(covidData.deaths) || "unknown"}</li>
           </ul>
         ) : (
           <p>No Covid19 data of this country</p>

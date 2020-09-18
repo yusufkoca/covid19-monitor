@@ -22,7 +22,6 @@ const WORLD_LATEST_QUERY = gql`
         latest {
           confirmed
           deceased
-          recovered
           lastUpdated
         }
       }

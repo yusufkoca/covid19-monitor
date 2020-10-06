@@ -8,10 +8,10 @@ export default function CountryDashboard() {
   let { countryCode } = useParams<{ countryCode: string }>();
   return (
     <Grid container>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <MostRecent countryCode={countryCode}></MostRecent>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <AllTime countryCode={countryCode}></AllTime>
       </Grid>
     </Grid>

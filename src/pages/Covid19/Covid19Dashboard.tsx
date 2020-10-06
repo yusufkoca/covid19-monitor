@@ -15,6 +15,7 @@ import MultipleCountryComparisonGraph from "../../components/Covid19/MultipleCou
 import WorldIcon from "@material-ui/icons/Public";
 import formatNumber from "../../utils/formatNumber";
 import { useClientInfo } from "../../ClientInfoContext";
+import { Hidden } from "@material-ui/core";
 
 const WORLD_LATEST_QUERY = gql`
   query WorldLatest {
@@ -74,7 +75,7 @@ export default function Covid19Dashboard() {
   return (
     <React.Fragment>
       <Grid container>
-        <Grid item xs={2}>
+        <Grid item xs={12} md={2}>
           <ListItem>
             <Link to={"/covid19/world-map"}>
               <ListItemIcon>
@@ -88,25 +89,29 @@ export default function Covid19Dashboard() {
               )} Deaths: ${formatNumber(data.latest.deaths)}`}
             />
           </ListItem>
-          <h2>Highest Numbers</h2>
-          <Top10List
-            handleChangeSelectedCountries={handleChangeSelectedCountries}
-            countries={countriesSorted}
-            top10Countries={top10Countries}
-            defaultSelectedCountries={defaultSelectedCountriesMap}
-          ></Top10List>
+          <Hidden smDown>
+            <h2>Highest Numbers</h2>
+            <Top10List
+              handleChangeSelectedCountries={handleChangeSelectedCountries}
+              countries={countriesSorted}
+              top10Countries={top10Countries}
+              defaultSelectedCountries={defaultSelectedCountriesMap}
+            ></Top10List>
+          </Hidden>
         </Grid>
-        <Grid item xs={8}>
-          <h2>Country Comparison</h2>
-          <MultipleCountryComparisonGraph
-            countries={
-              selectedCountries.length > 0
-                ? selectedCountries
-                : defaultSelectedCountriesCodes
-            }
-          ></MultipleCountryComparisonGraph>
-        </Grid>
-        <Grid item xs={2}>
+        <Hidden smDown>
+          <Grid item xs={8}>
+            <h2>Country Comparison</h2>
+            <MultipleCountryComparisonGraph
+              countries={
+                selectedCountries.length > 0
+                  ? selectedCountries
+                  : defaultSelectedCountriesCodes
+              }
+            ></MultipleCountryComparisonGraph>
+          </Grid>
+        </Hidden>
+        <Grid item xs={12} md={2}>
           {clientCountryData && (
             <ListItem>
               <Link to={"/covid19/country/" + clientCountryData.code}>

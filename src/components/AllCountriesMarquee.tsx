@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import InfiniteScroll from "../InfiniteScrolling";
+import InfiniteScroll from "./InfiniteScrolling";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-// @ts-ignore
 import ReactCountryFlag from "react-country-flag";
 
 const WORLD_LATEST_QUERY = gql`

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import getClientGeo from "./services/getClientGeo";
+import getClientGeo from "../services/getClientGeo";
 const ClientInfoContext = React.createContext<Record<string, any>>({});
 
 const ClientInfoProvider = (props: Record<string, any>) => {

@@ -8,12 +8,14 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Line } from "react-chartjs-2";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import graphColors from "../../utils/graphColors";
+import graphColors from "../utils/graphColors";
+
 const useStyles = makeStyles({
   bottomNavigation: {
     backgroundColor: "transparent",
   },
 });
+
 const SPECIFIC_COUNTRIES_QUERY = gql`
   query SpecificCountries($filter: CountryFilter) {
     countries(filter: $filter) {
@@ -39,15 +41,18 @@ const SPECIFIC_COUNTRIES_QUERY = gql`
     }
   }
 `;
+
 enum Covid19NumbersType {
   CONFIRMED = "confirmed",
   DEATHS = "deaths",
   RECOVERED = "recovered",
 }
+
 enum GraphType {
   LINEAR = "linear",
   LOGARITHMIC = "logarithmic",
 }
+
 export default function MultipleCountryComparisonGraph({
   countries = [],
 }: {

@@ -4,7 +4,7 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import ReactTooltip from "react-tooltip";
-import MapChart from "../components/Covid19/MapChart";
+import MapChart from "../components/MapChart";
 import formatNumber from "../utils/formatNumber";
 
 const WORLD_LATEST_QUERY = gql`

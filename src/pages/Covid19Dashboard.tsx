@@ -9,12 +9,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Top10List from "../components/Covid19/Top10List";
-import AllCountriesMarquee from "../components/Covid19/AllCountriesMarquee";
-import MultipleCountryComparisonGraph from "../components/Covid19/MultipleCountryComparisonGraph";
+import Top10List from "../components/Top10List";
+import AllCountriesMarquee from "../components/AllCountriesMarquee";
+import MultipleCountryComparisonGraph from "../components/MultipleCountryComparisonGraph";
 import WorldIcon from "@material-ui/icons/Public";
 import formatNumber from "../utils/formatNumber";
-import { useClientInfo } from "../ClientInfoContext";
+import { useClientInfo } from "../providers/ClientInfoContext";
 import { Hidden } from "@material-ui/core";
 
 const WORLD_LATEST_QUERY = gql`

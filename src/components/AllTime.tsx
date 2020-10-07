@@ -3,6 +3,8 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Line } from "react-chartjs-2";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import TimelineItem from "../typings/TimelineItem";
+
 const COUNTRY_DATA = gql`
   query CountryTimeline($countryCode: String!) {
     country(code: $countryCode) {
@@ -11,14 +13,15 @@ const COUNTRY_DATA = gql`
         date
         confirmed
         deltaConfirmed
-        deaths: deceased
-        deltaDeaths: deltaDeceased
+        deceased
+        deltaDeceased
         recovered
         deltaRecovered
       }
     }
   }
 `;
+
 export default function MostRecent({ countryCode }: { countryCode: string }) {
   const { loading, error, data } = useQuery(COUNTRY_DATA, {
     variables: { countryCode },
@@ -30,30 +33,24 @@ export default function MostRecent({ countryCode }: { countryCode: string }) {
   const chartData: {
     labels: string[];
     confirmed: number[];
-    deaths: number[];
+    deceased: number[];
     recovered: number[];
   } = {
     labels: [],
     confirmed: [],
-    deaths: [],
+    deceased: [],
     recovered: [],
   };
 
-  data.country.timeline.forEach(
-    (dailyData: {
-      date: string;
-      confirmed: number;
-      deaths: number;
-      recovered: number;
-    }) => {
-      if (dailyData.confirmed > 0) {
-        chartData.labels.push(dailyData.date);
-        chartData.confirmed.push(dailyData.confirmed);
-        chartData.deaths.push(dailyData.deaths);
-        chartData.recovered.push(dailyData.recovered);
-      }
+  data.country.timeline.forEach((dailyData: TimelineItem) => {
+    if (dailyData.confirmed > 0) {
+      chartData.labels.push(dailyData.date);
+      chartData.confirmed.push(dailyData.confirmed);
+      chartData.deceased.push(dailyData.deceased);
+      chartData.recovered.push(dailyData.recovered);
     }
-  );
+  });
+
   const lineData = {
     labels: chartData.labels, //Dates
     datasets: [
@@ -97,7 +94,7 @@ export default function MostRecent({ countryCode }: { countryCode: string }) {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: chartData.deaths,
+        data: chartData.deceased,
       },
       {
         label: "Recovered",

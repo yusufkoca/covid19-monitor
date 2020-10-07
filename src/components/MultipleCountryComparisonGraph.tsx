@@ -9,6 +9,8 @@ import { useQuery } from "@apollo/react-hooks";
 import { Line } from "react-chartjs-2";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import graphColors from "../utils/graphColors";
+import Country from "../typings/Country";
+import TimelineItem from "../typings/TimelineItem";
 
 const useStyles = makeStyles({
   bottomNavigation: {
@@ -26,14 +28,14 @@ const SPECIFIC_COUNTRIES_QUERY = gql`
           date
           confirmed
           deltaConfirmed
-          deaths: deceased
-          deltaDeaths: deltaDeceased
+          deceased
+          deltaDeceased
           recovered
           deltaRecovered
         }
         latest {
           confirmed
-          deaths: deceased
+          death: deceased
           recovered
           lastUpdated
         }
@@ -44,7 +46,7 @@ const SPECIFIC_COUNTRIES_QUERY = gql`
 
 enum Covid19NumbersType {
   CONFIRMED = "confirmed",
-  DEATHS = "deaths",
+  DEATHS = "deceased",
   RECOVERED = "recovered",
 }
 
@@ -81,7 +83,7 @@ export default function MultipleCountryComparisonGraph({
     setComparisonType(value);
   };
   const datasets = data.countries.results.map(
-    (country: Record<string, any>, index: number) => {
+    (country: Country, index: number) => {
       const color = graphColors[index];
       return {
         label: country.name,
@@ -103,7 +105,7 @@ export default function MultipleCountryComparisonGraph({
         pointRadius: 1,
         pointHitRadius: 10,
         data: country.timeline.map(
-          (dailyData: Record<string, any>) => dailyData[comparisonType]
+          (dailyData: TimelineItem) => dailyData[comparisonType]
         ),
         //yAxisID: country.code,
       };
@@ -111,7 +113,7 @@ export default function MultipleCountryComparisonGraph({
   );
   const lineData = {
     labels: data.countries.results[0].timeline.map(
-      (dailyData: Record<string, any>) => dailyData.date
+      (dailyData: TimelineItem) => dailyData.date
     ), //Dates
     datasets: datasets,
   };

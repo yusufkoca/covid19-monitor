@@ -7,11 +7,12 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ReactCountryFlag from "react-country-flag";
+import Country from "../typings/Country";
 
 type Top10ListProps = {
   handleChangeSelectedCountries: (selectedCountryCodes: string[]) => void;
-  top10Countries: Record<string, any>[];
-  defaultSelectedCountries: Record<string, any>;
+  top10Countries: Country[];
+  defaultSelectedCountries: Record<string, Country>;
 };
 
 export default function Top10List({
@@ -20,9 +21,9 @@ export default function Top10List({
   defaultSelectedCountries,
 }: Top10ListProps) {
   const [selectedCountries, setSelectedCountries] = useState<
-    Record<string, any>
+    Record<string, Country>
   >(defaultSelectedCountries);
-  const handleToggleCountry = (country: Record<string, any>) => {
+  const handleToggleCountry = (country: Country) => {
     const newSelectedCountries = { ...selectedCountries };
     if (selectedCountries[country.code]) {
       delete newSelectedCountries[country.code];
@@ -56,7 +57,7 @@ export default function Top10List({
             </Link>
             <ListItemText
               primary={country.name}
-              secondary={`Cases: ${country.latest.confirmed} Deaths: ${country.latest.deaths}`}
+              secondary={`Cases: ${country.latest.confirmed} Deaths: ${country.latest.deceased}`}
             />
             {
               <ListItemSecondaryAction>

@@ -16,6 +16,7 @@ import WorldIcon from "@material-ui/icons/Public";
 import formatNumber from "../utils/formatNumber";
 import { useClientInfo } from "../providers/ClientInfoContext";
 import { Hidden } from "@material-ui/core";
+import Country from "../typings/Country";
 
 const WORLD_LATEST_QUERY = gql`
   query WorldLatest {
@@ -27,14 +28,14 @@ const WORLD_LATEST_QUERY = gql`
         name
         latest {
           confirmed
-          deaths: deceased
+          deceased
           lastUpdated
         }
       }
     }
     latest {
       confirmed
-      deaths: deceased
+      deceased
       recovered
       lastUpdated
     }
@@ -56,6 +57,7 @@ export default function Covid19Dashboard() {
   const defaultSelectedCountriesCodes = defaultSelectedCountries.map(
     (country) => country.code
   );
+
   const defaultSelectedCountriesMap = defaultSelectedCountries.reduce(function (
     map,
     country
@@ -64,14 +66,15 @@ export default function Covid19Dashboard() {
     return map;
   },
   {});
+
   const handleChangeSelectedCountries = (selectedCountries: string[]) => {
     setSelectedCountries(selectedCountries);
   };
-  const clientCountryData = data.countries.results.find(
-    (country: Record<string, any>) => {
-      return country.code === clientInfo.country_code;
-    }
-  );
+
+  const clientCountryData = data.countries.results.find((country: Country) => {
+    return country.code === clientInfo.country_code;
+  });
+
   return (
     <React.Fragment>
       <Grid container>
@@ -86,7 +89,7 @@ export default function Covid19Dashboard() {
               primary={"World Total"}
               secondary={`Cases: ${formatNumber(
                 data.latest.confirmed
-              )} Deaths: ${formatNumber(data.latest.deaths)}`}
+              )} Deaths: ${formatNumber(data.latest.deceased)}`}
             />
           </ListItem>
           <Hidden smDown>
@@ -129,7 +132,7 @@ export default function Covid19Dashboard() {
                 primary={clientCountryData.name}
                 secondary={`Cases: ${formatNumber(
                   clientCountryData.latest.confirmed
-                )} Deaths: ${formatNumber(clientCountryData.latest.deaths)}`}
+                )} Deaths: ${formatNumber(clientCountryData.latest.deceased)}`}
               />
             </ListItem>
           )}

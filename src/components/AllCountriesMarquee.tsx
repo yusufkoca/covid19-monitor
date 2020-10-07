@@ -9,6 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ReactCountryFlag from "react-country-flag";
+import Country from "../typings/Country";
 
 const WORLD_LATEST_QUERY = gql`
   {
@@ -43,7 +44,7 @@ export default function AllCountriesMarquee() {
     >
       <List dense={true}>
         <InfiniteScroll duration={200} direction={"up"}>
-          {data.countries.results.map((country: Record<string, any>) => {
+          {data.countries.results.map((country: Country) => {
             return (
               <ListItem key={country.name}>
                 <Link to={"/country/" + country.code}>
@@ -62,13 +63,6 @@ export default function AllCountriesMarquee() {
                   primary={country.name}
                   secondary={`Cases: ${country.latest.confirmed} Deaths: ${country.latest.deceased}`}
                 />
-                {/*
-                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-                */}
               </ListItem>
             );
           })}

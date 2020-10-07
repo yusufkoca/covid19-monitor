@@ -6,6 +6,9 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import ReactTooltip from "react-tooltip";
 import MapChart from "../components/MapChart";
 import formatNumber from "../utils/formatNumber";
+import Country from "../typings/Country";
+import CovidData from "../typings/CovidData";
+import GeoData from "../typings/GeoData";
 
 const WORLD_LATEST_QUERY = gql`
   query WorldLatest {
@@ -17,7 +20,7 @@ const WORLD_LATEST_QUERY = gql`
         name
         latest {
           confirmed
-          deaths: deceased
+          deceased
           lastUpdated
         }
       }
@@ -27,27 +30,25 @@ const WORLD_LATEST_QUERY = gql`
 
 export default function WorldMap() {
   let history = useHistory();
-  const [covidData, setCovidData] = useState<Record<string, any>>({
+  const [covidData, setCovidData] = useState<CovidData>({
     confirmed: 0,
-    deaths: 0,
+    deceased: 0,
   });
 
-  const [geoData, setGeoData] = useState<Record<string, any>>({
+  const [geoData, setGeoData] = useState<GeoData>({
     NAME: "",
     POP_EST: 0,
+    ISO_A2: "",
   });
 
-  const onHover = (
-    geoData: Record<string, any>,
-    covidData: Record<string, any>
-  ) => {
+  const onHover = (geoData: GeoData, covidData: CovidData) => {
     setCovidData(covidData);
     setGeoData(geoData);
   };
   const onMouseLeave = () => {
     setCovidData({
       confirmed: 0,
-      deaths: 0,
+      deceased: 0,
     });
   };
 
@@ -60,8 +61,8 @@ export default function WorldMap() {
   if (error) return <p>Error :(</p>;
 
   const countries = data.countries.results.reduce(function (
-    map: Record<string, any>,
-    country: Record<string, any>
+    map: Record<string, CovidData>,
+    country: Country
   ) {
     map[country.code] = country.latest;
     return map;
@@ -82,7 +83,7 @@ export default function WorldMap() {
         {covidData ? (
           <ul>
             <li>Confirmed: {formatNumber(covidData.confirmed) || "unknown"}</li>
-            <li>Deaths: {formatNumber(covidData.deaths) || "unknown"}</li>
+            <li>Deaths: {formatNumber(covidData.deceased) || "unknown"}</li>
           </ul>
         ) : (
           <p>No Covid19 data of this country</p>

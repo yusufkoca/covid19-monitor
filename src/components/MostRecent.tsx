@@ -9,7 +9,7 @@ const COUNTRY_DATA = gql`
       name
       latest {
         confirmed
-        deaths: deceased
+        deceased
         recovered
         lastUpdated
       }
@@ -32,7 +32,7 @@ export default function MostRecent({ countryCode }: { countryCode: string }) {
       {
         data: [
           lastDayData.confirmed,
-          lastDayData.deaths,
+          lastDayData.deceased,
           lastDayData.recovered,
         ],
         backgroundColor: ["#FFCE56", "#FF6384", "#36A2EB"],

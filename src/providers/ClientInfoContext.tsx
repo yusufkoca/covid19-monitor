@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import getClientGeo from "../services/getClientGeo";
-const ClientInfoContext = React.createContext<Record<string, any>>({});
+import ClientInfo from "../typings/ClientInfo";
 
-const ClientInfoProvider = (props: Record<string, any>) => {
-  const [clientInfo, setClientInfo] = useState<Record<string, any>>({});
+const ClientInfoContext = React.createContext<ClientInfo>({});
+
+type ClientInfoProviderProps = {
+  children: React.ReactNode;
+};
+
+const ClientInfoProvider = (props: ClientInfoProviderProps) => {
+  const [clientInfo, setClientInfo] = useState<ClientInfo>({});
   useEffect(() => {
     getClientGeo().then(function (response) {
       setClientInfo(response.data);

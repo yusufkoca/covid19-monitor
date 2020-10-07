@@ -9,12 +9,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Top10List from "../../components/Covid19/Top10List";
-import AllCountriesMarquee from "../../components/Covid19/AllCountriesMarquee";
-import MultipleCountryComparisonGraph from "../../components/Covid19/MultipleCountryComparisonGraph";
+import Top10List from "../components/Covid19/Top10List";
+import AllCountriesMarquee from "../components/Covid19/AllCountriesMarquee";
+import MultipleCountryComparisonGraph from "../components/Covid19/MultipleCountryComparisonGraph";
 import WorldIcon from "@material-ui/icons/Public";
-import formatNumber from "../../utils/formatNumber";
-import { useClientInfo } from "../../ClientInfoContext";
+import formatNumber from "../utils/formatNumber";
+import { useClientInfo } from "../ClientInfoContext";
 import { Hidden } from "@material-ui/core";
 
 const WORLD_LATEST_QUERY = gql`
@@ -77,7 +77,7 @@ export default function Covid19Dashboard() {
       <Grid container>
         <Grid item xs={12} md={2}>
           <ListItem>
-            <Link to={"/covid19/world-map"}>
+            <Link to={"/world-map"}>
               <ListItemIcon>
                 <WorldIcon></WorldIcon>
               </ListItemIcon>
@@ -93,7 +93,6 @@ export default function Covid19Dashboard() {
             <h2>Highest Numbers</h2>
             <Top10List
               handleChangeSelectedCountries={handleChangeSelectedCountries}
-              countries={countriesSorted}
               top10Countries={top10Countries}
               defaultSelectedCountries={defaultSelectedCountriesMap}
             ></Top10List>
@@ -114,7 +113,7 @@ export default function Covid19Dashboard() {
         <Grid item xs={12} md={2}>
           {clientCountryData && (
             <ListItem>
-              <Link to={"/covid19/country/" + clientCountryData.code}>
+              <Link to={"/country/" + clientCountryData.code}>
                 <ListItemAvatar>
                   <ReactCountryFlag
                     countryCode={clientCountryData.code}

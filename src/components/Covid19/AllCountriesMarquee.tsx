@@ -47,7 +47,7 @@ export default function AllCountriesMarquee() {
           {data.countries.results.map((country: Record<string, any>) => {
             return (
               <ListItem key={country.name}>
-                <Link to={"/covid19/country/" + country.code}>
+                <Link to={"/country/" + country.code}>
                   <ListItemAvatar>
                     <ReactCountryFlag
                       countryCode={country.code}

@@ -8,17 +8,17 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ReactCountryFlag from "react-country-flag";
 
-export default function Top10List({
-  handleChangeSelectedCountries,
-  countries,
-  top10Countries,
-  defaultSelectedCountries,
-}: {
+type Top10ListProps = {
   handleChangeSelectedCountries: (selectedCountryCodes: string[]) => void;
-  countries: Record<string, any>[];
   top10Countries: Record<string, any>[];
   defaultSelectedCountries: Record<string, any>;
-}) {
+};
+
+export default function Top10List({
+  handleChangeSelectedCountries,
+  top10Countries,
+  defaultSelectedCountries,
+}: Top10ListProps) {
   const [selectedCountries, setSelectedCountries] = useState<
     Record<string, any>
   >(defaultSelectedCountries);
@@ -42,7 +42,7 @@ export default function Top10List({
       {top10Countries.map((country) => {
         return (
           <ListItem key={country.name}>
-            <Link to={"/covid19/country/" + country.code}>
+            <Link to={"/country/" + country.code}>
               <ListItemAvatar>
                 <ReactCountryFlag
                   countryCode={country.code}
@@ -64,7 +64,9 @@ export default function Top10List({
                   edge="end"
                   onChange={(event) => handleToggleCountry(country)}
                   checked={selectedCountries[country.code] ? true : false}
-                  inputProps={{ "aria-labelledby": country.code }}
+                  inputProps={{
+                    "aria-labelledby": country.code,
+                  }}
                 />
               </ListItemSecondaryAction>
             }

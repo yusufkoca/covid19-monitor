@@ -2,8 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 
-import MostRecent from "../../components/Covid19/MostRecent";
-import AllTime from "../../components/Covid19/AllTime";
+import MostRecent from "../components/Covid19/MostRecent";
+import AllTime from "../components/Covid19/AllTime";
 export default function CountryDashboard() {
   let { countryCode } = useParams<{ countryCode: string }>();
   return (

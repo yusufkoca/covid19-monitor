@@ -181,7 +181,7 @@ export default function MiniDrawer() {
             </Tooltip>
           </StyledLink>
           <Divider />
-          <StyledLink to="/covid19/">
+          <StyledLink to="/">
             <Tooltip title="Covid19 Dashboard">
               <ListItem button>
                 <ListItemIcon>
@@ -191,7 +191,7 @@ export default function MiniDrawer() {
               </ListItem>
             </Tooltip>
           </StyledLink>
-          <StyledLink to="/covid19/world-map">
+          <StyledLink to="/world-map">
             <Tooltip title="Covid19 World Map">
               <ListItem button>
                 <ListItemIcon>

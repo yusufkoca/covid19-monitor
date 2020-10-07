@@ -4,8 +4,8 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import ReactTooltip from "react-tooltip";
-import MapChart from "../../components/Covid19/MapChart";
-import formatNumber from "../../utils/formatNumber";
+import MapChart from "../components/Covid19/MapChart";
+import formatNumber from "../utils/formatNumber";
 
 const WORLD_LATEST_QUERY = gql`
   query WorldLatest {
@@ -52,7 +52,7 @@ export default function WorldMap() {
   };
 
   const handleClickEvent = (countryName: string) => {
-    history.push("/covid19/country/" + countryName);
+    history.push("/country/" + countryName);
   };
 
   const { loading, error, data } = useQuery(WORLD_LATEST_QUERY);

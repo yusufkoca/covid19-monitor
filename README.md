@@ -1,4 +1,16 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hobby frontend project to display latest Covid19 case numbers.
+Daily updated data from John Hopkins University.
+GraphQL API is used from this public repo -> [github.com/svandriel/covid19-graphql](https://github.com/svandriel/covid19-graphql)
+To get client location [ipapi.co](https://ipapi.co/) is used.
+Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## JS Stack
+
+- React
+- Typescript
+- Material-UI
+- Chart.js
+- Apollo GraphQL
 
 ## Available Scripts
 

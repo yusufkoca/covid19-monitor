@@ -8,10 +8,8 @@ export default function App() {
   return (
     <ClientInfoProvider>
       <Router>
-        <div style={{ display: "flex" }}>
-          <Drawer></Drawer>
-          <Main></Main>
-        </div>
+        <Drawer></Drawer>
+        <Main></Main>
       </Router>
     </ClientInfoProvider>
   );

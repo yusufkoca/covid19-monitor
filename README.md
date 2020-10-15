@@ -4,6 +4,8 @@ GraphQL API is used from this public repo -> [github.com/svandriel/covid19-graph
 To get client location [ipapi.co](https://ipapi.co/) is used.
 Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Demo Link -> https://hepcovid19.netlify.app/
+
 ## JS Stack
 
 - React

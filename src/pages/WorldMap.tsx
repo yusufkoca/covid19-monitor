@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import ReactTooltip from "react-tooltip";
 import MapChart from "../components/MapChart";
 import formatNumber from "../utils/formatNumber";
 import Country from "../typings/Country";
 import CovidData from "../typings/CovidData";
 import GeoData from "../typings/GeoData";
+import LoadingView from "../components/LoadingView";
+import ErrorView from "../components/ErrorView";
 
 const WORLD_LATEST_QUERY = gql`
   query WorldLatest {
@@ -57,8 +58,9 @@ export default function WorldMap() {
   };
 
   const { loading, error, data } = useQuery(WORLD_LATEST_QUERY);
-  if (loading) return <LinearProgress />;
-  if (error) return <p>Error :(</p>;
+
+  if (loading) return <LoadingView></LoadingView>;
+  if (error) return <ErrorView error={error}></ErrorView>;
 
   const countries = data.countries.results.reduce(function (
     map: Record<string, CovidData>,

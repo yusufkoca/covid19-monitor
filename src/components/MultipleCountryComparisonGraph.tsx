@@ -7,10 +7,11 @@ import Tab from "@material-ui/core/Tab";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Line } from "react-chartjs-2";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import graphColors from "../utils/graphColors";
 import Country from "../typings/Country";
 import TimelineItem from "../typings/TimelineItem";
+import ErrorView from "./ErrorView";
+import LoadingView from "./LoadingView";
 
 const useStyles = makeStyles({
   bottomNavigation: {
@@ -30,13 +31,11 @@ const SPECIFIC_COUNTRIES_QUERY = gql`
           deltaConfirmed
           deceased
           deltaDeceased
-          recovered
           deltaRecovered
         }
         latest {
           confirmed
           death: deceased
-          recovered
           lastUpdated
         }
       }
@@ -72,10 +71,9 @@ export default function MultipleCountryComparisonGraph({
       },
     },
   });
-  if (loading) return <LinearProgress color="secondary" />;
-  if (error) {
-    return <p>Error :(</p>;
-  }
+  if (loading) return <LoadingView></LoadingView>;
+  if (error) return <ErrorView error={error}></ErrorView>;
+
   if (data.countries.results.length === 0) {
     return <p>No result</p>;
   }

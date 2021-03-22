@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import InfiniteScroll from "./InfiniteScrolling";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -10,6 +9,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ReactCountryFlag from "react-country-flag";
 import Country from "../typings/Country";
+import ErrorView from "./ErrorView";
+import LoadingView from "./LoadingView";
 
 const WORLD_LATEST_QUERY = gql`
   {
@@ -32,8 +33,8 @@ const WORLD_LATEST_QUERY = gql`
 export default function AllCountriesMarquee() {
   const { loading, error, data } = useQuery(WORLD_LATEST_QUERY);
 
-  if (loading) return <LinearProgress />;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <LoadingView></LoadingView>;
+  if (error) return <ErrorView error={error}></ErrorView>;
 
   return (
     <div

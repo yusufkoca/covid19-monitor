@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import ReactCountryFlag from "react-country-flag";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import Grid from "@material-ui/core/Grid";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItem from "@material-ui/core/ListItem";
@@ -17,6 +16,8 @@ import formatNumber from "../utils/formatNumber";
 import { useClientInfo } from "../providers/ClientInfoContext";
 import { Hidden } from "@material-ui/core";
 import Country from "../typings/Country";
+import LoadingView from "../components/LoadingView";
+import ErrorView from "../components/ErrorView";
 
 const WORLD_LATEST_QUERY = gql`
   query WorldLatest {
@@ -36,7 +37,6 @@ const WORLD_LATEST_QUERY = gql`
     latest {
       confirmed
       deceased
-      recovered
       lastUpdated
     }
   }
@@ -46,8 +46,10 @@ export default function Covid19Dashboard() {
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const clientInfo = useClientInfo();
   const { loading, error, data } = useQuery(WORLD_LATEST_QUERY);
-  if (loading) return <LinearProgress />;
-  if (error) return <p>Error :(</p>;
+
+  if (loading) return <LoadingView></LoadingView>;
+  if (error) return <ErrorView error={error}></ErrorView>;
+
   let countriesSorted = [...data.countries.results];
   countriesSorted.sort((a, b) =>
     a.latest.confirmed > b.latest.confirmed ? -1 : 1

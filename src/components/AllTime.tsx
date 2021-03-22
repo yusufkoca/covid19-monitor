@@ -2,8 +2,9 @@ import React from "react";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Line } from "react-chartjs-2";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import TimelineItem from "../typings/TimelineItem";
+import ErrorView from "./ErrorView";
+import LoadingView from "./LoadingView";
 
 const COUNTRY_DATA = gql`
   query CountryTimeline($countryCode: String!) {
@@ -22,13 +23,13 @@ const COUNTRY_DATA = gql`
   }
 `;
 
-export default function MostRecent({ countryCode }: { countryCode: string }) {
+export default function AllTime({ countryCode }: { countryCode: string }) {
   const { loading, error, data } = useQuery(COUNTRY_DATA, {
     variables: { countryCode },
   });
 
-  if (loading) return <LinearProgress color="secondary" />;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <LoadingView></LoadingView>;
+  if (error) return <ErrorView error={error}></ErrorView>;
 
   const chartData: {
     labels: string[];

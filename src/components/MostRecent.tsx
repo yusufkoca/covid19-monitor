@@ -2,7 +2,8 @@ import React from "react";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { Doughnut } from "react-chartjs-2";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import ErrorView from "./ErrorView";
+import LoadingView from "./LoadingView";
 const COUNTRY_DATA = gql`
   query CountryLatest($countryCode: String!) {
     country(code: $countryCode) {
@@ -21,8 +22,8 @@ export default function MostRecent({ countryCode }: { countryCode: string }) {
     variables: { countryCode },
   });
 
-  if (loading) return <LinearProgress />;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <LoadingView></LoadingView>;
+  if (error) return <ErrorView error={error}></ErrorView>;
 
   const lastDayData = data.country.latest;
 
